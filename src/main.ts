@@ -1,32 +1,36 @@
-import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+
+import { ValidationPipe } from '@nestjs/common';
+
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Global validation
   app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
+    new ValidationPipe(),
   );
 
-  // Swagger documentation
   const config = new DocumentBuilder()
-    .setTitle('Ecommerce Admin API')
-    .setDescription('Backend API for Ecommerce Admin Dashboard')
+    .setTitle('E-commerce Admin API')
+    .setDescription('Admin backend API documentation')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(
+    app,
+    config,
+  );
 
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup(
+    'api',
+    app,
+    document,
+  );
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(3000);
 }
 
 bootstrap();
