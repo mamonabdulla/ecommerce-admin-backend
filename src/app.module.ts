@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth/jwt-auth.guard';
+import { PermissionModule } from './modules/permission/permission.module';
 
 
 @Module({
@@ -44,6 +45,8 @@ import { JwtAuthGuard } from './modules/auth/guards/jwt-auth/jwt-auth.guard';
     AuthModule,
 
     UserModule,
+
+    PermissionModule,
   ],
 
 
