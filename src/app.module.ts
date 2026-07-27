@@ -1,15 +1,20 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 
+import { JwtAuthGuard } from './modules/auth/guards/jwt-auth/jwt-auth.guard';
+
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+
 
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
@@ -19,7 +24,9 @@ import { UserModule } from './modules/user/user.module';
 
         host: configService.get<string>('DATABASE_HOST'),
 
-        port: Number(configService.get('DATABASE_PORT')),
+        port: Number(
+          configService.get('DATABASE_PORT'),
+        ),
 
         username: configService.get<string>('DATABASE_USER'),
 
@@ -33,9 +40,18 @@ import { UserModule } from './modules/user/user.module';
       }),
     }),
 
+
     AuthModule,
 
     UserModule,
+  ],
+
+
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule {}
