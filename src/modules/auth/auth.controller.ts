@@ -4,21 +4,29 @@ import {
   Get,
   Post,
   Req,
-  UseGuards,
 } from '@nestjs/common';
+
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
+
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LogoutDto } from './dto/logout.dto';
+
 import { Public } from '../../common/decorators/public.decorator';
+import { Permission } from '../../common/decorators/permission.decorator';
+
+
 
 @Controller('auth')
 export class AuthController {
+
+
   constructor(
     private readonly authService: AuthService,
   ) {}
+
 
 
   @Public()
@@ -26,8 +34,14 @@ export class AuthController {
   login(
     @Body() loginDto: LoginDto,
   ) {
-    return this.authService.login(loginDto);
+
+    return this.authService.login(
+      loginDto,
+    );
+
   }
+
+
 
 
   @Public()
@@ -35,16 +49,30 @@ export class AuthController {
   refresh(
     @Body() refreshTokenDto: RefreshTokenDto,
   ) {
-    return this.authService.refresh(refreshTokenDto);
+
+    return this.authService.refresh(
+      refreshTokenDto,
+    );
+
   }
+
+
+
 
   @Public()
   @Post('logout')
   logout(
     @Body() logoutDto: LogoutDto,
   ) {
-    return this.authService.logout(logoutDto);
+
+    return this.authService.logout(
+      logoutDto,
+    );
+
   }
+
+
+
 
 
   @ApiBearerAuth()
@@ -52,19 +80,65 @@ export class AuthController {
   session(
     @Req() req,
   ) {
+
     return {
-      user: req.user,
-      role: null,
-      permissions: [],
+
+      user:
+        req.user ?? null,
+
+
+      role:
+        req.user?.role ?? null,
+
+
+      permissions:
+        req.user?.permissions ?? [],
+
     };
+
   }
+
+
+
 
 
   @ApiBearerAuth()
   @Get('profile')
-  profile() {
+  profile(
+    @Req() req,
+  ) {
+
     return {
-      message: 'JWT is working',
+
+      message:
+        'JWT is working',
+
+
+      user:
+        req.user,
+
     };
+
   }
+
+
+
+
+
+  @ApiBearerAuth()
+  @Permission('product:create')
+  @Get('test-create-product')
+  testCreateProduct() {
+
+    return {
+
+      message:
+        'You have product:create permission',
+
+    };
+
+  }
+
+
+
 }

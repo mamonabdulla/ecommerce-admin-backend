@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -22,7 +23,6 @@ export class PermissionController {
   ) {}
 
 
-
   @Post('groups')
   createGroup(
     @Body()
@@ -32,7 +32,6 @@ export class PermissionController {
       createPermissionGroupDto,
     );
   }
-
 
 
   @Patch('groups/:id')
@@ -50,7 +49,6 @@ export class PermissionController {
   }
 
 
-
   @Post()
   createPermission(
     @Body()
@@ -62,12 +60,19 @@ export class PermissionController {
   }
 
 
+  @Delete(':id')
+  deletePermission(
+    @Param('id')
+    id: string,
+  ) {
+    return this.permissionService.deletePermission(id);
+  }
+
 
   @Get('groups')
   findAllGroups() {
     return this.permissionService.findAllGroups();
   }
-
 
 
   @Get()

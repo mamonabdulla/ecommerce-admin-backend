@@ -3,43 +3,80 @@ import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { PermissionModule } from './modules/permission/permission.module';
+import { RoleModule } from './modules/role/role.module';
+
 
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth/jwt-auth.guard';
-import { PermissionModule } from './modules/permission/permission.module';
+import { PermissionGuard } from './modules/auth/guards/permission/permission.guard';
+
 
 
 @Module({
+
   imports: [
+
     ConfigModule.forRoot({
       isGlobal: true,
     }),
 
 
+
     TypeOrmModule.forRootAsync({
+
       inject: [ConfigService],
 
-      useFactory: (configService: ConfigService) => ({
+
+      useFactory: (
+        configService: ConfigService,
+      ) => ({
+
         type: 'postgres',
 
-        host: configService.get<string>('DATABASE_HOST'),
+
+        host:
+          configService.get<string>(
+            'DATABASE_HOST',
+          ),
+
 
         port: Number(
-          configService.get('DATABASE_PORT'),
+          configService.get(
+            'DATABASE_PORT',
+          ),
         ),
 
-        username: configService.get<string>('DATABASE_USER'),
 
-        password: configService.get<string>('DATABASE_PASSWORD'),
+        username:
+          configService.get<string>(
+            'DATABASE_USER',
+          ),
 
-        database: configService.get<string>('DATABASE_NAME'),
+
+        password:
+          configService.get<string>(
+            'DATABASE_PASSWORD',
+          ),
+
+
+        database:
+          configService.get<string>(
+            'DATABASE_NAME',
+          ),
+
 
         autoLoadEntities: true,
 
+
         synchronize: true,
+
       }),
+
     }),
+
 
 
     AuthModule,
@@ -47,14 +84,33 @@ import { PermissionModule } from './modules/permission/permission.module';
     UserModule,
 
     PermissionModule,
+
+    RoleModule,
+
   ],
+
 
 
   providers: [
+
+
     {
       provide: APP_GUARD,
+
       useClass: JwtAuthGuard,
+
     },
+
+
+    {
+      provide: APP_GUARD,
+
+      useClass: PermissionGuard,
+
+    },
+
+
   ],
+
 })
 export class AppModule {}

@@ -1,5 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
+
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { Repository } from 'typeorm';
 
 import { Permission } from './entities/permission.entity';
@@ -12,6 +18,7 @@ import { UpdatePermissionGroupDto } from './dto/update-permission-group.dto';
 
 @Injectable()
 export class PermissionService {
+
 
   constructor(
 
@@ -28,9 +35,12 @@ export class PermissionService {
 
 
 
+
+
   async createGroup(
     createPermissionGroupDto: CreatePermissionGroupDto,
   ) {
+
 
     const {
       name,
@@ -40,7 +50,29 @@ export class PermissionService {
 
 
 
+    const existingGroup =
+      await this.permissionGroupRepository.findOne({
+        where: {
+          name,
+        },
+      });
+
+
+
+    if (existingGroup) {
+
+      throw new ConflictException(
+        'Permission group already exists',
+      );
+
+    }
+
+
+
+
+
     return this.permissionGroupRepository.manager.transaction(
+
       async (manager) => {
 
 
@@ -54,19 +86,21 @@ export class PermissionService {
           );
 
 
+
         const savedGroup =
-          await manager.save(
-            group,
-          );
+          await manager.save(group);
+
+
 
 
 
         const permissions =
-          actions.map((action) => {
+          actions.map((action) =>
 
-            return manager.create(
+            manager.create(
               Permission,
               {
+
                 name:
                   `${name.toLowerCase()}:${action.toLowerCase()}`,
 
@@ -74,10 +108,12 @@ export class PermissionService {
                   `${action} permission for ${name}`,
 
                 group: savedGroup,
-              },
-            );
 
-          });
+              },
+            ),
+
+          );
+
 
 
 
@@ -88,9 +124,11 @@ export class PermissionService {
 
 
 
+
         return manager.findOne(
           PermissionGroup,
           {
+
             where: {
               id: savedGroup.id,
             },
@@ -98,13 +136,18 @@ export class PermissionService {
             relations: {
               permissions: true,
             },
+
           },
         );
 
+
       },
+
     );
 
+
   }
+
 
 
 
@@ -114,10 +157,12 @@ export class PermissionService {
     createPermissionDto: CreatePermissionDto,
   ) {
 
+
     const {
       groupId,
       ...permissionData
     } = createPermissionDto;
+
 
 
 
@@ -131,17 +176,43 @@ export class PermissionService {
 
 
     if (!group) {
-      return {
-        message: 'Permission group not found',
-      };
+
+      throw new NotFoundException(
+        'Permission group not found',
+      );
+
     }
+
+
+
+
+    const existingPermission =
+      await this.permissionRepository.findOne({
+        where: {
+          name: permissionData.name,
+        },
+      });
+
+
+
+    if (existingPermission) {
+
+      throw new ConflictException(
+        'Permission already exists',
+      );
+
+    }
+
 
 
 
     const permission =
       this.permissionRepository.create({
+
         ...permissionData,
+
         group,
+
       });
 
 
@@ -152,14 +223,11 @@ export class PermissionService {
 
   }
 
-
-
-
-
-  async updateGroup(
+    async updateGroup(
     id: string,
     updatePermissionGroupDto: UpdatePermissionGroupDto,
   ) {
+
 
     const {
       name,
@@ -169,7 +237,9 @@ export class PermissionService {
 
 
 
+
     return this.permissionGroupRepository.manager.transaction(
+
       async (manager) => {
 
 
@@ -181,31 +251,41 @@ export class PermissionService {
                 id,
               },
 
-              relations: {
-                permissions: true,
-              },
             },
           );
 
 
 
+
         if (!group) {
-          return {
-            message: 'Permission group not found',
-          };
+
+          throw new NotFoundException(
+            'Permission group not found',
+          );
+
         }
+
+
 
 
 
         if (name) {
+
           group.name = name;
+
         }
+
 
 
 
         if (description !== undefined) {
-          group.description = description;
+
+          group.description =
+            description;
+
         }
+
+
 
 
 
@@ -216,66 +296,119 @@ export class PermissionService {
 
 
 
+
+
+
         if (actions) {
 
 
-          await manager.delete(
-            Permission,
-            {
-              group: {
-                id: group.id,
-              },
-            },
-          );
+          const newPermissions: Permission[] = [];
 
 
 
-          const permissions =
-            actions.map((action) => {
+          for (const action of actions) {
 
-              return manager.create(
+
+            const permissionName =
+              `${group.name.toLowerCase()}:${action.toLowerCase()}`;
+
+
+
+            // Check globally because Permission.name is unique
+            const existingPermission =
+              await manager.findOne(
                 Permission,
                 {
-                  name:
-                    `${group.name.toLowerCase()}:${action.toLowerCase()}`,
-
-                  description:
-                    `${action} permission for ${group.name}`,
-
-                  group,
+                  where: {
+                    name: permissionName,
+                  },
                 },
               );
 
-            });
 
 
 
-          await manager.save(
-            Permission,
-            permissions,
-          );
+            if (!existingPermission) {
+
+
+              const permission =
+                manager.create(
+                  Permission,
+                  {
+
+                    name:
+                      permissionName,
+
+
+                    description:
+                      `${action} permission for ${group.name}`,
+
+
+                    group,
+
+                  },
+                );
+
+
+
+              newPermissions.push(
+                permission,
+              );
+
+
+            }
+
+
+          }
+
+
+
+
+
+
+          if (newPermissions.length > 0) {
+
+
+            await manager.save(
+              Permission,
+              newPermissions,
+            );
+
+
+          }
+
 
         }
+
+
 
 
 
         return manager.findOne(
           PermissionGroup,
           {
+
             where: {
               id,
             },
 
+
             relations: {
               permissions: true,
             },
+
           },
         );
 
+
       },
+
     );
 
+
   }
+
+
 
 
 
@@ -283,13 +416,22 @@ export class PermissionService {
 
   async findAllGroups() {
 
+
     return this.permissionGroupRepository.find({
+
       relations: {
+
         permissions: true,
+
       },
+
     });
 
+
   }
+
+
+
 
 
 
@@ -297,12 +439,72 @@ export class PermissionService {
 
   async findAllPermissions() {
 
+
     return this.permissionRepository.find({
+
       relations: {
+
         group: true,
+
       },
+
     });
 
+
   }
+
+
+
+
+
+
+
+
+  async deletePermission(
+    id: string,
+  ) {
+
+
+    const permission =
+      await this.permissionRepository.findOne({
+
+        where: {
+          id,
+        },
+
+      });
+
+
+
+
+    if (!permission) {
+
+      throw new NotFoundException(
+        'Permission not found',
+      );
+
+    }
+
+
+
+
+
+    await this.permissionRepository.delete(
+      id,
+    );
+
+
+
+
+    return {
+
+      message:
+        'Permission deleted successfully',
+
+    };
+
+
+  }
+
 
 }

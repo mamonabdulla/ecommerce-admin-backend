@@ -7,11 +7,14 @@ import {
 
 import { PermissionGroup } from './permission-group.entity';
 
+
 @Entity('permissions')
 export class Permission {
 
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
 
 
   @Column({
@@ -20,10 +23,12 @@ export class Permission {
   name: string;
 
 
+
   @Column({
     nullable: true,
   })
   description: string;
+
 
 
   @ManyToOne(
@@ -31,7 +36,9 @@ export class Permission {
     group => group.permissions,
     {
       onDelete: 'CASCADE',
+      nullable: false,
     },
   )
   group: PermissionGroup;
+
 }

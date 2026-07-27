@@ -49,10 +49,15 @@ export class AuthService {
       };
     }
 
-    const accessToken = this.jwtService.sign({
-      sub: user.id,
-      email: user.email,
-    });
+    const accessToken = this.jwtService.sign(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      {
+        expiresIn: '15m',
+      },
+    );
 
     const {
       refreshToken,
@@ -94,10 +99,15 @@ export class AuthService {
       };
     }
 
-    const newAccessToken = this.jwtService.sign({
-      sub: user.id,
-      email: user.email,
-    });
+    const newAccessToken = this.jwtService.sign(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      {
+        expiresIn: '15m',
+      },
+    );
 
     const {
       refreshToken: newRefreshToken,
