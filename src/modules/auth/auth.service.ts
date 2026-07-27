@@ -32,6 +32,12 @@ export class AuthService {
       };
     }
 
+    if (!user.isActive) {
+      return {
+        message: 'Invalid credentials',
+      };
+    }
+
     const isPasswordValid = await bcrypt.compare(
       password,
       user.password,
@@ -48,8 +54,10 @@ export class AuthService {
       email: user.email,
     });
 
-    const { refreshToken, refreshTokenHash } =
-      this.generateRefreshToken();
+    const {
+      refreshToken,
+      refreshTokenHash,
+    } = this.generateRefreshToken();
 
     user.refreshTokenHash = refreshTokenHash;
 
@@ -75,6 +83,12 @@ export class AuthService {
     });
 
     if (!user) {
+      return {
+        message: 'Invalid refresh token',
+      };
+    }
+
+    if (!user.isActive) {
       return {
         message: 'Invalid refresh token',
       };
