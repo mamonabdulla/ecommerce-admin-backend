@@ -3,14 +3,17 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  ArrayMinSize,
 } from 'class-validator';
 
 
 export class CreatePermissionGroupDto {
 
+
   @IsString()
   @IsNotEmpty()
   name: string;
+
 
 
   @IsString()
@@ -18,10 +21,13 @@ export class CreatePermissionGroupDto {
   description?: string;
 
 
+
   @IsArray()
+  @ArrayMinSize(1)
   @IsString({
     each: true,
   })
   actions: string[];
+
 
 }

@@ -8,9 +8,11 @@ import {
 
 export class CreatePermissionDto {
 
+
   @IsString()
   @IsNotEmpty()
   name: string;
+
 
 
   @IsString()
@@ -18,8 +20,10 @@ export class CreatePermissionDto {
   description?: string;
 
 
+
   @IsUUID()
   @IsNotEmpty()
   groupId: string;
+
 
 }

@@ -6,7 +6,10 @@ import {
   Param,
   Patch,
   Post,
+  Req,
 } from '@nestjs/common';
+
+import type { Request } from 'express';
 
 import { UserService } from './user.service';
 
@@ -27,11 +30,17 @@ export class UserController {
 
 
 
+
+
+
+
   @Post()
   @Permission('user:create')
   create(
+
     @Body()
     createUserDto: CreateUserDto,
+
   ) {
 
     return this.userService.create(
@@ -44,13 +53,44 @@ export class UserController {
 
 
 
+
+
+
+
   @Get()
-  @Permission('user:read')
+  @Permission('user:watch')
   findAll() {
 
     return this.userService.findAll();
 
   }
+
+
+
+
+
+
+
+
+
+  @Get(':id')
+  @Permission('user:read')
+  findOne(
+
+    @Param('id')
+    id: string,
+
+  ) {
+
+    return this.userService.findOne(
+      id,
+    );
+
+  }
+
+
+
+
 
 
 
@@ -63,17 +103,31 @@ export class UserController {
     @Param('id')
     id: string,
 
+
     @Body()
     updateUserDto: UpdateUserDto,
+
+
+    @Req()
+    req: Request,
 
   ) {
 
     return this.userService.update(
+
       id,
+
       updateUserDto,
+
+      req.user,
+
     );
 
   }
+
+
+
+
 
 
 
@@ -86,10 +140,18 @@ export class UserController {
     @Param('id')
     id: string,
 
+
+    @Req()
+    req: Request,
+
   ) {
 
     return this.userService.remove(
+
       id,
+
+      req.user,
+
     );
 
   }

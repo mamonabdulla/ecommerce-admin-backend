@@ -9,23 +9,33 @@ import {
 
 import { Role } from '../../role/entities/role.entity';
 
+
 @Entity('users')
 export class User {
 
+
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
 
 
   @Column()
   name: string;
 
 
-  @Column({ unique: true })
+
+  @Column({
+    unique: true,
+  })
   email: string;
 
 
-  @Column()
+
+  @Column({
+    select: false,
+  })
   password: string;
+
 
 
   @Column({
@@ -34,10 +44,12 @@ export class User {
   phone: string;
 
 
+
   @Column({
     nullable: true,
   })
   gender: string;
+
 
 
   @Column({
@@ -46,17 +58,30 @@ export class User {
   avatar: string;
 
 
+
   @Column({
     default: true,
   })
   isActive: boolean;
 
 
+
   @Column({
     type: 'varchar',
     nullable: true,
+    select: false,
   })
   refreshTokenHash: string | null;
+
+
+
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+    select: false,
+  })
+  refreshTokenExpiresAt: Date | null;
+
 
 
   @ManyToOne(
@@ -70,11 +95,14 @@ export class User {
   role: Role;
 
 
+
   @CreateDateColumn()
   createdAt: Date;
 
 
+
   @UpdateDateColumn()
   updatedAt: Date;
+
 
 }

@@ -7,12 +7,15 @@ import { PermissionService } from './permission.service';
 import { Permission } from './entities/permission.entity';
 import { PermissionGroup } from './entities/permission-group.entity';
 
+import { Role } from '../role/entities/role.entity';
+
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
       Permission,
       PermissionGroup,
+      Role,
     ]),
   ],
 

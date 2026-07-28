@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
@@ -17,6 +18,7 @@ import { Permission } from '../permission/entities/permission.entity';
 
 
 import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 
 
 
@@ -41,6 +43,8 @@ export class RoleService {
 
 
 
+
+
   async create(
     createRoleDto: CreateRoleDto,
   ) {
@@ -58,9 +62,11 @@ export class RoleService {
 
     const existingRole =
       await this.roleRepository.findOne({
+
         where: {
           name,
         },
+
       });
 
 
@@ -104,8 +110,6 @@ export class RoleService {
 
 
 
-
-
     const role =
       this.roleRepository.create({
 
@@ -136,6 +140,7 @@ export class RoleService {
 
 
 
+
   async findAll() {
 
 
@@ -151,6 +156,7 @@ export class RoleService {
 
 
   }
+
 
 
 
@@ -183,6 +189,7 @@ export class RoleService {
 
 
 
+
     if (!role) {
 
       throw new NotFoundException(
@@ -206,19 +213,48 @@ export class RoleService {
 
 
 
-  async remove(
+  async update(
+
     id: string,
+
+    updateRoleDto: UpdateRoleDto,
+
   ) {
+
+
+    const {
+
+      name,
+
+      description,
+
+      isActive,
+
+      permissionIds,
+
+    } = updateRoleDto;
+
+
+
 
 
     const role =
       await this.roleRepository.findOne({
 
         where: {
+
           id,
+
+        },
+
+        relations: {
+
+          permissions: true,
+
         },
 
       });
+
 
 
 
@@ -235,9 +271,191 @@ export class RoleService {
 
 
 
+
+
+    if (name) {
+
+
+      const existingRole =
+        await this.roleRepository.findOne({
+
+          where: {
+
+            name,
+
+          },
+
+        });
+
+
+
+
+
+      if (
+
+        existingRole &&
+
+        existingRole.id !== id
+
+      ) {
+
+        throw new ConflictException(
+          'Role already exists',
+        );
+
+      }
+
+
+
+
+      role.name = name;
+
+    }
+
+
+
+
+
+
+
+    if (description !== undefined) {
+
+      role.description =
+        description;
+
+    }
+
+
+
+
+
+
+
+    if (isActive !== undefined) {
+
+      role.isActive =
+        isActive;
+
+    }
+
+
+
+
+
+
+
+    if (permissionIds) {
+
+
+      const permissions =
+        await this.permissionRepository.find({
+
+          where: {
+
+            id: In(permissionIds),
+
+          },
+
+        });
+
+
+
+
+
+      if (
+
+        permissions.length !== permissionIds.length
+
+      ) {
+
+        throw new NotFoundException(
+          'One or more permissions not found',
+        );
+
+      }
+
+
+
+
+      role.permissions =
+        permissions;
+
+    }
+
+
+
+
+
+
+
+    return this.roleRepository.save(
+      role,
+    );
+
+  }
+
+
+
+
+
+
+
+
+
+  async remove(
+
+    id: string,
+
+  ) {
+
+
+    const role =
+      await this.roleRepository.findOne({
+
+        where: {
+
+          id,
+
+        },
+
+      });
+
+
+
+
+
+    if (!role) {
+
+      throw new NotFoundException(
+        'Role not found',
+      );
+
+    }
+
+
+
+
+
+
+
+    if (role.name === 'Admin') {
+
+      throw new ForbiddenException(
+        'Cannot delete system role',
+      );
+
+    }
+
+
+
+
+
+
+
     await this.roleRepository.delete(
       id,
     );
+
 
 
 

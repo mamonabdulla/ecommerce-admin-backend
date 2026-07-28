@@ -8,6 +8,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { PermissionModule } from './modules/permission/permission.module';
 import { RoleModule } from './modules/role/role.module';
+import { MediaModule } from './modules/media/media.module';
+import { CategoryModule } from './modules/category/category.module';
 
 
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth/jwt-auth.guard';
@@ -24,14 +26,17 @@ import { PermissionGuard } from './modules/auth/guards/permission/permission.gua
     }),
 
 
-
     TypeOrmModule.forRootAsync({
 
-      inject: [ConfigService],
+      inject: [
+        ConfigService,
+      ],
 
 
       useFactory: (
+
         configService: ConfigService,
+
       ) => ({
 
         type: 'postgres',
@@ -43,11 +48,12 @@ import { PermissionGuard } from './modules/auth/guards/permission/permission.gua
           ),
 
 
-        port: Number(
-          configService.get(
-            'DATABASE_PORT',
+        port:
+          Number(
+            configService.get(
+              'DATABASE_PORT',
+            ),
           ),
-        ),
 
 
         username:
@@ -78,7 +84,6 @@ import { PermissionGuard } from './modules/auth/guards/permission/permission.gua
     }),
 
 
-
     AuthModule,
 
     UserModule,
@@ -87,28 +92,26 @@ import { PermissionGuard } from './modules/auth/guards/permission/permission.gua
 
     RoleModule,
 
+    MediaModule,
+
+    CategoryModule,
+
   ],
 
 
 
   providers: [
 
-
     {
       provide: APP_GUARD,
-
       useClass: JwtAuthGuard,
-
     },
 
 
     {
       provide: APP_GUARD,
-
       useClass: PermissionGuard,
-
     },
-
 
   ],
 

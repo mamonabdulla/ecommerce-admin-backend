@@ -2,6 +2,7 @@ import {
   Injectable,
   ConflictException,
   NotFoundException,
+  ForbiddenException,
 } from '@nestjs/common';
 
 import {
@@ -40,6 +41,9 @@ export class UserService {
 
 
 
+
+
+
   async create(
     data: CreateUserDto,
   ) {
@@ -47,34 +51,48 @@ export class UserService {
 
     const existingUser =
       await this.userRepository.findOne({
+
         where: {
           email: data.email,
         },
+
       });
 
 
+
     if (existingUser) {
+
       throw new ConflictException(
         'Email already exists',
       );
+
     }
+
+
 
 
 
     const role =
       await this.roleRepository.findOne({
+
         where: {
           id: data.roleId,
         },
+
       });
 
 
 
     if (!role) {
+
       throw new NotFoundException(
         'Role not found',
       );
+
     }
+
+
+
 
 
 
@@ -83,6 +101,8 @@ export class UserService {
         data.password,
         10,
       );
+
+
 
 
 
@@ -110,10 +130,13 @@ export class UserService {
 
 
 
+
+
     const savedUser =
       await this.userRepository.save(
         user,
       );
+
 
 
     return this.removeSensitiveData(
@@ -126,14 +149,24 @@ export class UserService {
 
 
 
+
+
+
+
   async findAll() {
+
 
     const users =
       await this.userRepository.find({
+
         relations: {
+
           role: true,
+
         },
+
       });
+
 
 
     return users.map(
@@ -147,54 +180,222 @@ export class UserService {
 
 
 
-  async update(
+
+
+
+
+  async findOne(
     id: string,
-    data: UpdateUserDto,
   ) {
 
 
     const user =
       await this.userRepository.findOne({
+
         where: {
           id,
         },
 
         relations: {
+
           role: true,
+
         },
+
       });
 
 
 
+
+
     if (!user) {
+
       throw new NotFoundException(
         'User not found',
       );
+
     }
+
+
+
+
+
+    return this.removeSensitiveData(
+      user,
+    );
+
+  }
+
+
+
+
+
+
+
+
+
+  async update(
+
+    id: string,
+
+    data: UpdateUserDto,
+
+    currentUser: any,
+
+  ) {
+
+
+    const user =
+      await this.userRepository.findOne({
+
+        where: {
+          id,
+        },
+
+        relations: {
+
+          role: true,
+
+        },
+
+      });
+
+
+
+
+
+    if (!user) {
+
+      throw new NotFoundException(
+        'User not found',
+      );
+
+    }
+
+
+
+
+
+
+
+    // Prevent self modification
+    if (
+      currentUser &&
+      currentUser.id === id
+    ) {
+
+
+      if (data.roleId) {
+
+        throw new ForbiddenException(
+          'You cannot change your own role',
+        );
+
+      }
+
+
+
+      if (
+        data.isActive === false
+      ) {
+
+        throw new ForbiddenException(
+          'You cannot deactivate yourself',
+        );
+
+      }
+
+    }
+
+
+
+
+
+
+
+
+    if (data.email) {
+
+
+      const existingUser =
+        await this.userRepository.findOne({
+
+          where: {
+
+            email: data.email,
+
+          },
+
+        });
+
+
+
+
+
+      if (
+        existingUser &&
+        existingUser.id !== id
+      ) {
+
+        throw new ConflictException(
+          'Email already exists',
+        );
+
+      }
+
+
+
+      user.email =
+        data.email;
+
+    }
+
+
+
+
+
+
 
 
 
     if (data.roleId) {
 
+
       const role =
         await this.roleRepository.findOne({
+
           where: {
+
             id: data.roleId,
+
           },
+
         });
 
 
 
+
+
       if (!role) {
+
         throw new NotFoundException(
           'Role not found',
         );
+
       }
 
 
-      user.role = role;
+
+      user.role =
+        role;
 
     }
+
+
+
+
+
+
 
 
 
@@ -210,19 +411,23 @@ export class UserService {
 
 
 
-    if (data.name)
+
+
+
+
+    if (data.name !== undefined)
       user.name = data.name;
 
 
-    if (data.phone)
+    if (data.phone !== undefined)
       user.phone = data.phone;
 
 
-    if (data.gender)
+    if (data.gender !== undefined)
       user.gender = data.gender;
 
 
-    if (data.avatar)
+    if (data.avatar !== undefined)
       user.avatar = data.avatar;
 
 
@@ -231,10 +436,16 @@ export class UserService {
 
 
 
+
+
+
+
     const updatedUser =
       await this.userRepository.save(
         user,
       );
+
+
 
 
 
@@ -248,25 +459,88 @@ export class UserService {
 
 
 
+
+
+
+
   async remove(
+
     id: string,
+
+    currentUser: any,
+
   ) {
 
 
     const user =
       await this.userRepository.findOne({
+
         where: {
+
           id,
+
         },
+
+        relations: {
+
+          role: true,
+
+        },
+
       });
 
 
 
+
+
+
     if (!user) {
+
       throw new NotFoundException(
         'User not found',
       );
+
     }
+
+
+
+
+
+
+
+
+    // Prevent deleting yourself
+    if (
+      currentUser &&
+      currentUser.id === id
+    ) {
+
+      throw new ForbiddenException(
+        'You cannot delete yourself',
+      );
+
+    }
+
+
+
+
+
+
+
+    // Prevent deleting system Admin
+    if (
+      user.role?.name === 'Admin'
+    ) {
+
+      throw new ForbiddenException(
+        'Cannot delete Admin user',
+      );
+
+    }
+
+
+
+
 
 
 
@@ -276,12 +550,22 @@ export class UserService {
 
 
 
+
+
+
     return {
+
       message:
         'User deleted successfully',
+
     };
 
+
   }
+
+
+
+
 
 
 
@@ -293,10 +577,17 @@ export class UserService {
 
 
     const {
+
       password,
+
       refreshTokenHash,
+
+      refreshTokenExpiresAt,
+
       ...safeUser
+
     } = user;
+
 
 
     return safeUser;
