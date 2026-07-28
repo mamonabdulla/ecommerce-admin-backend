@@ -14,15 +14,15 @@ import { CreatePermissionGroupDto } from './dto/create-permission-group.dto';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionGroupDto } from './dto/update-permission-group.dto';
 
+import { RequirePermission } from '../../common/decorators/require-permission.decorator';
 
 @Controller('permission')
 export class PermissionController {
-
   constructor(
     private readonly permissionService: PermissionService,
   ) {}
 
-
+  @RequirePermission('permission:create')
   @Post('groups')
   createGroup(
     @Body()
@@ -33,7 +33,7 @@ export class PermissionController {
     );
   }
 
-
+  @RequirePermission('permission:update')
   @Patch('groups/:id')
   updateGroup(
     @Param('id')
@@ -48,7 +48,7 @@ export class PermissionController {
     );
   }
 
-
+  @RequirePermission('permission:create')
   @Post()
   createPermission(
     @Body()
@@ -59,7 +59,7 @@ export class PermissionController {
     );
   }
 
-
+  @RequirePermission('permission:delete')
   @Delete(':id')
   deletePermission(
     @Param('id')
@@ -68,16 +68,15 @@ export class PermissionController {
     return this.permissionService.deletePermission(id);
   }
 
-
+  @RequirePermission('permission:watch')
   @Get('groups')
   findAllGroups() {
     return this.permissionService.findAllGroups();
   }
 
-
+  @RequirePermission('permission:read')
   @Get()
   findAllPermissions() {
     return this.permissionService.findAllPermissions();
   }
-
 }

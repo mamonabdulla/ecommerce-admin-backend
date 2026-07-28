@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+
 import { PassportStrategy } from '@nestjs/passport';
 
 import {
@@ -13,95 +17,56 @@ import { Repository } from 'typeorm';
 
 import { User } from '../../user/entities/user.entity';
 
-
 @Injectable()
-export class JwtStrategy 
-extends PassportStrategy(Strategy) {
-
-
+export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-
     private readonly configService: ConfigService,
 
-
     @InjectRepository(User)
-    private readonly userRepository:
-      Repository<User>,
-
+    private readonly userRepository: Repository<User>,
   ) {
-
-
     super({
-
       jwtFromRequest:
         ExtractJwt.fromAuthHeaderAsBearerToken(),
 
+      ignoreExpiration: false,
 
       secretOrKey:
-        configService.get<string>(
-          'JWT_SECRET',
-        ) ?? '',
-
+        configService.get<string>('JWT_SECRET') ?? '',
     });
-
   }
 
-
-
   async validate(payload: any) {
-
-
-    const user =
-      await this.userRepository.findOne({
-
-        where: {
-          id: payload.sub,
+    const user = await this.userRepository.findOne({
+      where: {
+        id: payload.sub,
+      },
+      relations: {
+        role: {
+          permissions: true,
         },
+      },
+    });
 
-
-        relations: {
-
-          role: {
-
-            permissions: true,
-
-          },
-
-        },
-
-      });
-
-
-
-    if (!user || !user.isActive) {
-
-      return null;
-
+    if (!user) {
+      throw new UnauthorizedException('User not found');
     }
 
-
+    if (!user.isActive) {
+      throw new UnauthorizedException('User is inactive');
+    }
 
     return {
-
       id: user.id,
-
       email: user.email,
-
       name: user.name,
 
-
-      role:
-        user.role?.name ?? null,
-
+      role: user.role?.name ?? null,
 
       permissions:
         user.role?.permissions?.map(
-          permission =>
-            permission.name,
+          (permission) => permission.name,
         ) ?? [],
-
     };
-
   }
-
 }
