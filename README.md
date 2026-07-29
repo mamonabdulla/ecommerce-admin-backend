@@ -1,98 +1,376 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# E-commerce Admin Dashboard Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend API implementation for the **Trends Bird Limited Backend Developer Intern Assignment**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project implements the backend system for an e-commerce admin dashboard. The main focus of this project is authentication, authorization, role-based access control, catalog management, validation, and database design.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technology Stack
 
-## Project setup
+- Node.js v22.14.0
+- NestJS
+- TypeScript
+- PostgreSQL
+- TypeORM
+- JWT Authentication
+- Refresh Token Authentication
+- bcrypt Password Hashing
+- class-validator
+- Swagger API Documentation
 
-```bash
-$ npm install
+---
+
+# Implemented Modules
+
+| Module | Status |
+|---|---|
+| Authentication | Complete |
+| Permission | Complete |
+| Role | Complete |
+| User | Complete |
+| Media | Complete |
+| Category | Complete |
+| Brand | Complete |
+| Attribute | Complete |
+| Product | Complete |
+
+---
+
+# Authentication
+
+Implemented features:
+
+- Login with email and password
+- JWT access token
+- Refresh token authentication
+- Logout with refresh token revocation
+- Current session endpoint
+- Password hashing using bcrypt
+- Active/inactive user protection
+
+Authentication strategy:
+
+```
+Authorization: Bearer <access_token>
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+# Role Based Access Control (RBAC)
 
-# watch mode
-$ npm run start:dev
+Authorization flow:
 
-# production mode
-$ npm run start:prod
+```
+User → Role → Permission
 ```
 
-## Run tests
+A user has one role.
 
-```bash
-# unit tests
-$ npm run test
+A role contains multiple permissions.
 
-# e2e tests
-$ npm run test:e2e
+Each protected route checks whether the user's role has the required permission.
 
-# test coverage
-$ npm run test:cov
+Example permissions:
+
+```
+product:create
+product:read
+product:update
+product:delete
+
+user:create
+user:read
+user:update
+user:delete
+
+role:create
+role:update
+
+media:upload
 ```
 
-## Deployment
+The API returns:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```
+401 Unauthorized
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+when authentication fails.
 
-## Resources
+```
+403 Forbidden
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+when the user is authenticated but does not have enough permission.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+# Database
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Database:
 
-## Stay in touch
+```
+PostgreSQL
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+ORM:
 
-## License
+```
+TypeORM
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+The project uses TypeORM migrations.
+
+---
+
+# Installation
+
+Clone repository:
+
+```bash
+git clone <repository-url>
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+---
+
+# Environment Variables
+
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=postgres
+DATABASE_PASSWORD=your_password
+DATABASE_NAME=ecommerce_admin
+
+JWT_SECRET=your_secret
+
+PORT=3000
+```
+
+---
+
+# Database Migration
+
+Generate migration:
+
+```bash
+npm run migration:generate
+```
+
+Run migration:
+
+```bash
+npm run migration:run
+```
+
+Revert migration:
+
+```bash
+npm run migration:revert
+```
+
+---
+
+# Database Seed
+
+The seed script creates:
+
+- All required permissions
+- Super Admin role
+- Catalog Manager role
+- Super Admin user
+- Limited Catalog user
+
+Run seed:
+
+```bash
+npm run seed
+```
+
+---
+
+# Test Credentials
+
+## Super Admin
+
+```
+Email:
+admin@test.com
+
+Password:
+123456
+```
+
+Role:
+
+```
+Super Admin
+```
+
+This account has full system permissions.
+
+---
+
+## Catalog Manager
+
+```
+Email:
+manager@test.com
+
+Password:
+123456
+```
+
+Role:
+
+```
+Catalog Manager
+```
+
+This account has limited permissions and is used to test 403 forbidden responses.
+
+---
+
+# Swagger Documentation
+
+Swagger endpoint:
+
+```
+http://localhost:3000/api
+```
+
+Swagger covers:
+
+- Authentication
+- Permissions
+- Roles
+- Users
+- Media
+- Categories
+- Brands
+- Attributes
+- Products
+
+---
+
+# Project Structure
+
+```
+src
+│
+├── auth
+├── permission
+├── role
+├── user
+├── media
+├── category
+├── brand
+├── attribute
+├── product
+│
+└── database
+    ├── migrations
+    └── seed.ts
+```
+
+---
+
+# Media Module
+
+Implemented:
+
+- File upload
+- Media records
+- File metadata storage
+- Shared media library
+- Media attachment support
+
+---
+
+# Category Module
+
+Implemented:
+
+- Category CRUD
+- Nested category structure
+- Parent-child relationship
+- Category tree support
+
+---
+
+# Brand Module
+
+Implemented:
+
+- Brand CRUD
+- Product brand relationship
+- Brand management
+
+---
+
+# Attribute Module
+
+Implemented:
+
+- Attribute CRUD
+- Attribute values
+- Product variant support
+
+---
+
+# Product Module
+
+Implemented:
+
+- Simple products
+- Variable products
+- Product variants
+- Categories relationship
+- Brand relationship
+- Media attachment
+- Product validation
+
+---
+
+# Validation and Error Handling
+
+Implemented:
+
+- Request validation
+- Duplicate data handling
+- Missing resource handling
+- Authentication errors
+- Authorization errors
+
+---
+
+# Version Control
+
+The project was developed incrementally with multiple commits for different features.
+
+---
+
+# Known Issues
+
+- Frontend exists only to demonstrate backend functionality.
+- UI design is not the primary focus of this assignment.
+- Automated tests and Docker setup were not included.
+
+---
+
+# Author
+
+Md Abdulla Al Mamon
+
+Backend Developer Intern Candidate
