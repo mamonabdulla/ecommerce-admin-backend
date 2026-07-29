@@ -16,50 +16,115 @@ import {
 
 import { join } from 'path';
 
+
+
 async function bootstrap() {
+
 
   const app =
     await NestFactory.create<NestExpressApplication>(
       AppModule,
     );
 
+
+
+
+
   app.useGlobalPipes(
-    new ValidationPipe(),
+
+    new ValidationPipe({
+
+      whitelist: true,
+
+      transform: true,
+
+    }),
+
   );
+
+
+
+
 
   app.useStaticAssets(
+
     join(__dirname, '..', 'uploads'),
+
     {
+
       prefix: '/uploads/',
+
     },
+
   );
+
+
+
+
 
   const config =
+
     new DocumentBuilder()
+
       .setTitle(
+
         'E-commerce Admin API',
+
       )
+
       .setDescription(
+
         'Admin backend API documentation',
+
       )
-      .setVersion('1.0')
+
+      .setVersion(
+
+        '1.0',
+
+      )
+
       .addBearerAuth()
+
       .build();
 
+
+
+
+
   const document =
+
     SwaggerModule.createDocument(
+
       app,
+
       config,
+
     );
 
+
+
+
+
   SwaggerModule.setup(
+
     'api',
+
     app,
+
     document,
+
   );
+
+
+
+
 
   await app.listen(3000);
 
+
 }
+
+
 
 bootstrap();

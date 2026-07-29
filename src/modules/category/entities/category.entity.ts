@@ -7,9 +7,12 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  ManyToMany,
 } from 'typeorm';
 
 import { Media } from '../../media/entities/media.entity';
+import { Product } from '../../product/entities/product.entity';
+
 
 
 @Entity('categories')
@@ -20,16 +23,19 @@ export class Category {
   id: string;
 
 
+
   @Column({
     unique: true,
   })
   name: string;
 
 
+
   @Column({
     unique: true,
   })
   slug: string;
+
 
 
   @Column({
@@ -39,7 +45,9 @@ export class Category {
   description: string | null;
 
 
+
   // Category image from media library
+
   @ManyToOne(
     () => Media,
     {
@@ -52,6 +60,7 @@ export class Category {
 
 
   // Parent category (self relation)
+
   @ManyToOne(
     () => Category,
     category => category.children,
@@ -65,11 +74,22 @@ export class Category {
 
 
   // Child categories
+
   @OneToMany(
     () => Category,
     category => category.parent,
   )
   children: Category[];
+
+
+
+  // Products inside this category
+
+  @ManyToMany(
+    () => Product,
+    product => product.categories,
+  )
+  products: Product[];
 
 
 
@@ -91,7 +111,9 @@ export class Category {
   createdAt: Date;
 
 
+
   @UpdateDateColumn()
   updatedAt: Date;
+
 
 }

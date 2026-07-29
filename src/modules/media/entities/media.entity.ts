@@ -3,11 +3,15 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+
 import { User } from '../../user/entities/user.entity';
+import { ProductMedia } from '../../product-media/entities/product-media.entity';
+
 
 
 @Entity('media')
@@ -18,28 +22,35 @@ export class Media {
   id: string;
 
 
+
   @Column()
   fileName: string;
+
 
 
   @Column()
   storedPath: string;
 
 
+
   @Column()
   publicUrl: string;
+
 
 
   @Column()
   mimeType: string;
 
 
+
   @Column()
   type: string;
 
 
+
   @Column('bigint')
   size: number;
+
 
 
   @Column({
@@ -49,11 +60,13 @@ export class Media {
   width: number | null;
 
 
+
   @Column({
     type: 'int',
     nullable: true,
   })
   height: number | null;
+
 
 
   @Column({
@@ -63,11 +76,13 @@ export class Media {
   thumbnail: string | null;
 
 
+
   @Column({
     type: 'varchar',
     nullable: true,
   })
   title: string | null;
+
 
 
   @Column({
@@ -77,19 +92,32 @@ export class Media {
   altText: string | null;
 
 
+
   @ManyToOne(
     () => User,
     {
       nullable: false,
-  })
+    },
+  )
   uploadedBy: User;
+
+
+
+  @OneToMany(
+    () => ProductMedia,
+    productMedia => productMedia.media,
+  )
+  productMedia: ProductMedia[];
+
 
 
   @CreateDateColumn()
   createdAt: Date;
 
 
+
   @UpdateDateColumn()
   updatedAt: Date;
+
 
 }

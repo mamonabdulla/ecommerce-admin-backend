@@ -14,6 +14,12 @@ import { CategoryModule } from './modules/category/category.module';
 
 import { JwtAuthGuard } from './modules/auth/guards/jwt-auth/jwt-auth.guard';
 import { PermissionGuard } from './modules/auth/guards/permission/permission.guard';
+import { BrandModule } from './modules/brand/brand.module';
+import { AttributeModule } from './modules/attribute/attribute.module';
+import { ProductModule } from './modules/product/product.module';
+import { ProductVariantModule } from './modules/product-variant/product-variant.module';
+import { ProductMediaModule } from './modules/product-media/product-media.module';
+
 
 
 
@@ -95,6 +101,16 @@ import { PermissionGuard } from './modules/auth/guards/permission/permission.gua
     MediaModule,
 
     CategoryModule,
+
+    BrandModule,
+
+    AttributeModule,
+
+    ProductModule,
+
+    ProductVariantModule,
+
+    ProductMediaModule,
 
   ],
 
