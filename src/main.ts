@@ -62,6 +62,7 @@ async function bootstrap() {
 
 
 
+
   const config =
 
     new DocumentBuilder()
@@ -84,9 +85,24 @@ async function bootstrap() {
 
       )
 
-      .addBearerAuth()
+      .addBearerAuth(
+
+        {
+
+          type: 'http',
+
+          scheme: 'bearer',
+
+          bearerFormat: 'JWT',
+
+        },
+
+        'access-token',
+
+      )
 
       .build();
+
 
 
 
@@ -106,6 +122,7 @@ async function bootstrap() {
 
 
 
+
   SwaggerModule.setup(
 
     'api',
@@ -114,7 +131,18 @@ async function bootstrap() {
 
     document,
 
+    {
+
+      swaggerOptions: {
+
+        persistAuthorization: true,
+
+      },
+
+    },
+
   );
+
 
 
 
