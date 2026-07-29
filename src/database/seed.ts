@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { DataSource } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
@@ -205,7 +206,7 @@ async function seed() {
 
 
 
-  // CREATE PERMISSION GROUPS
+  // CREATE GROUPS
 
   for (
     const groupName of Object.keys(permissionMap)
@@ -216,7 +217,9 @@ async function seed() {
       await permissionGroupRepository.findOne({
 
         where: {
+
           name: groupName,
+
         },
 
       });
@@ -251,13 +254,6 @@ async function seed() {
 
 
 
-  console.log(
-    'Permission groups created',
-  );
-
-
-
-
 
 
 
@@ -273,10 +269,13 @@ async function seed() {
       await permissionGroupRepository.findOne({
 
         where: {
+
           name: groupName,
+
         },
 
       });
+
 
 
 
@@ -296,11 +295,14 @@ async function seed() {
 
 
 
-      const exists =
+
+      let permission =
         await permissionRepository.findOne({
 
           where: {
+
             name: permissionName,
+
           },
 
         });
@@ -308,24 +310,21 @@ async function seed() {
 
 
 
-      if (!exists) {
+
+      if (!permission) {
 
 
-        const permission =
+        permission =
           permissionRepository.create({
 
-            name:
-              permissionName,
-
+            name: permissionName,
 
             description:
               `${permissionName} permission`,
 
-
             group,
 
           });
-
 
 
         await permissionRepository.save(
@@ -345,41 +344,27 @@ async function seed() {
 
 
 
-  console.log(
-    'Permissions created',
-  );
 
-
-
-
-
-
-
-
-  // GET ALL PERMISSIONS
 
   const allPermissions =
     await permissionRepository.find();
 
-
-
-
-
-
-
-
-  // CREATE SUPER ADMIN ROLE
+      // SUPER ADMIN ROLE
 
 
   let superAdminRole =
     await roleRepository.findOne({
 
       where: {
+
         name: 'Super Admin',
+
       },
 
       relations: {
+
         permissions: true,
+
       },
 
     });
@@ -397,14 +382,11 @@ async function seed() {
         name:
           'Super Admin',
 
-
         description:
           'System owner role',
 
-
         isActive:
           true,
-
 
         permissions:
           allPermissions,
@@ -412,10 +394,11 @@ async function seed() {
       });
 
 
+  } else {
 
-    await roleRepository.save(
-      superAdminRole,
-    );
+
+    superAdminRole.permissions =
+      allPermissions;
 
 
   }
@@ -424,8 +407,8 @@ async function seed() {
 
 
 
-  console.log(
-    'Super Admin role created',
+  await roleRepository.save(
+    superAdminRole,
   );
 
 
@@ -435,16 +418,41 @@ async function seed() {
 
 
 
-  // CREATE ADMIN ROLE
+
+  // CATALOG MANAGER ROLE
 
 
-  const adminPermissions =
+  const catalogPermissions =
     allPermissions.filter(
 
       permission =>
 
-        !permission.name.startsWith(
-          'permission:delete',
+        permission.name.startsWith(
+          'product:',
+        )
+
+        ||
+
+        permission.name.startsWith(
+          'category:',
+        )
+
+        ||
+
+        permission.name.startsWith(
+          'brand:',
+        )
+
+        ||
+
+        permission.name.startsWith(
+          'attribute:',
+        )
+
+        ||
+
+        permission.name.startsWith(
+          'media:',
         ),
 
     );
@@ -453,15 +461,22 @@ async function seed() {
 
 
 
-  let adminRole =
+
+
+  let catalogRole =
     await roleRepository.findOne({
 
       where: {
-        name: 'Admin',
+
+        name:
+          'Catalog Manager',
+
       },
 
       relations: {
+
         permissions: true,
+
       },
 
     });
@@ -470,34 +485,34 @@ async function seed() {
 
 
 
-  if (!adminRole) {
+
+  if (!catalogRole) {
 
 
-    adminRole =
+    catalogRole =
       roleRepository.create({
 
         name:
-          'Admin',
-
+          'Catalog Manager',
 
         description:
-          'Administrator role',
-
+          'Catalog access only',
 
         isActive:
           true,
 
-
         permissions:
-          adminPermissions,
+          catalogPermissions,
 
       });
 
 
 
-    await roleRepository.save(
-      adminRole,
-    );
+  } else {
+
+
+    catalogRole.permissions =
+      catalogPermissions;
 
 
   }
@@ -505,27 +520,22 @@ async function seed() {
 
 
 
-  console.log(
-    'Admin role created',
+
+
+  await roleRepository.save(
+    catalogRole,
   );
 
+    // SUPER ADMIN USER
 
 
-
-
-
-
-
-  // CREATE SUPER ADMIN USER
-
-
-  const existingUser =
+  let adminUser =
     await userRepository.findOne({
 
       where: {
 
         email:
-          'superadmin@example.com',
+          'admin@test.com',
 
       },
 
@@ -535,35 +545,33 @@ async function seed() {
 
 
 
-  if (!existingUser) {
-
-
-    const password =
-      await bcrypt.hash(
-        'SuperAdmin@123',
-        10,
-      );
+  const adminPassword =
+    await bcrypt.hash(
+      '123456',
+      10,
+    );
 
 
 
 
-    const user =
+
+  if (!adminUser) {
+
+
+    adminUser =
       userRepository.create({
 
         name:
-          'Super Admin',
-
+          'Admin',
 
         email:
-          'superadmin@example.com',
+          'admin@test.com',
 
-
-        password,
-
+        password:
+          adminPassword,
 
         role:
           superAdminRole,
-
 
         isActive:
           true,
@@ -571,11 +579,15 @@ async function seed() {
       });
 
 
+  } else {
 
 
-    await userRepository.save(
-      user,
-    );
+    adminUser.role =
+      superAdminRole;
+
+
+    adminUser.isActive =
+      true;
 
 
   }
@@ -584,13 +596,104 @@ async function seed() {
 
 
 
-  console.log(
-    'Super Admin user created',
+  await userRepository.save(
+    adminUser,
   );
 
 
 
 
+
+
+
+
+  // CATALOG USER
+
+
+  let managerUser =
+    await userRepository.findOne({
+
+      where: {
+
+        email:
+          'manager@test.com',
+
+      },
+
+    });
+
+
+
+
+
+  const managerPassword =
+    await bcrypt.hash(
+      '123456',
+      10,
+    );
+
+
+
+
+
+
+  if (!managerUser) {
+
+
+    managerUser =
+      userRepository.create({
+
+        name:
+          'Manager User',
+
+        email:
+          'manager@test.com',
+
+        password:
+          managerPassword,
+
+        role:
+          catalogRole,
+
+        isActive:
+          true,
+
+      });
+
+
+
+  } else {
+
+
+    managerUser.role =
+      catalogRole;
+
+
+    managerUser.isActive =
+      true;
+
+
+  }
+
+
+
+
+
+
+  await userRepository.save(
+    managerUser,
+  );
+
+
+
+
+
+
+
+
+  console.log(
+    'Seed completed successfully',
+  );
 
 
 
@@ -598,6 +701,7 @@ async function seed() {
 
 
 }
+
 
 
 
