@@ -83,7 +83,7 @@ import { ProductMediaModule } from './modules/product-media/product-media.module
         autoLoadEntities: true,
 
 
-        synchronize: true,
+        synchronize: false,
 
       }),
 
