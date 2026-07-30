@@ -244,9 +244,52 @@ export class PermissionService {
 
 
 
-    return this.permissionRepository.save(
-      permission,
-    );
+    const savedPermission =
+      await this.permissionRepository.save(
+        permission,
+      );
+
+
+
+
+
+    // Automatically add new permission to Super Admin
+
+    const superAdmin =
+      await this.roleRepository.findOne({
+
+        where: {
+          name: 'Super Admin',
+        },
+
+        relations: {
+          permissions: true,
+        },
+
+      });
+
+
+
+    if (superAdmin) {
+
+
+      superAdmin.permissions.push(
+        savedPermission,
+      );
+
+
+      await this.roleRepository.save(
+        superAdmin,
+      );
+
+
+    }
+
+
+
+
+
+    return savedPermission;
 
   }
 

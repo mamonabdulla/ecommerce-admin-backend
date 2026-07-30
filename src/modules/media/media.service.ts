@@ -228,7 +228,7 @@ export class MediaService {
 
 
       const thumbnailName =
-  `thumb-${path.parse(fileName).name}.jpg`;
+        `thumb-${path.parse(fileName).name}.jpg`;
 
 
 
@@ -372,6 +372,7 @@ export class MediaService {
 
 
 
+
   async uploadMultiple(
 
     files: Express.Multer.File[],
@@ -486,14 +487,14 @@ export class MediaService {
 
 
     query
-    .skip(
-      (page-1)*limit,
-    )
-    .take(limit)
-    .orderBy(
-      'media.createdAt',
-      'DESC',
-    );
+      .skip(
+        (page-1)*limit,
+      )
+      .take(limit)
+      .orderBy(
+        'media.createdAt',
+        'DESC',
+      );
 
 
 
@@ -601,6 +602,46 @@ export class MediaService {
 
     const media =
       await this.findOne(id);
+
+
+
+
+
+    const productMediaRepository =
+      this.mediaRepository.manager
+      .getRepository('product_media');
+
+
+
+
+
+    const used =
+      await productMediaRepository.findOne({
+
+        where:{
+          media:{
+            id,
+          },
+        },
+
+      });
+
+
+
+
+
+    if(used){
+
+      throw new BadRequestException(
+
+        'Cannot delete this media because it is used by a product',
+
+      );
+
+    }
+
+
+
 
 
 

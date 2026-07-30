@@ -344,12 +344,16 @@ async function seed() {
 
 
 
-
-
   const allPermissions =
     await permissionRepository.find();
 
-      // SUPER ADMIN ROLE
+
+
+
+
+
+
+  // SUPER ADMIN ROLE
 
 
   let superAdminRole =
@@ -427,33 +431,63 @@ async function seed() {
 
       permission =>
 
+
         permission.name.startsWith(
           'product:',
         )
 
+
         ||
+
 
         permission.name.startsWith(
           'category:',
         )
 
+
         ||
+
 
         permission.name.startsWith(
           'brand:',
         )
 
+
         ||
+
 
         permission.name.startsWith(
           'attribute:',
         )
 
+
         ||
 
-        permission.name.startsWith(
-          'media:',
-        ),
+
+        permission.name ===
+          'media:watch'
+
+
+        ||
+
+
+        permission.name ===
+          'media:read'
+
+
+        ||
+
+
+        permission.name ===
+          'media:upload'
+
+
+        ||
+
+
+        permission.name ===
+          'media:write'
+
 
     );
 
@@ -526,7 +560,15 @@ async function seed() {
     catalogRole,
   );
 
-    // SUPER ADMIN USER
+
+
+
+
+
+
+
+
+  // SUPER ADMIN USER
 
 
   let adminUser =

@@ -41,7 +41,29 @@ export class CategoryService {
   ) {
 
 
-    const existing =
+    const existingName =
+      await this.categoryRepository.findOne({
+
+        where:{
+          name: dto.name,
+        },
+
+      });
+
+
+
+    if(existingName){
+
+      throw new ConflictException(
+        'Category name already exists',
+      );
+
+    }
+
+
+
+
+    const existingSlug =
       await this.categoryRepository.findOne({
 
         where:{
@@ -52,13 +74,14 @@ export class CategoryService {
 
 
 
-    if(existing){
+    if(existingSlug){
 
       throw new ConflictException(
         'Category slug already exists',
       );
 
     }
+
 
 
 
@@ -323,6 +346,41 @@ export class CategoryService {
 
 
 
+    if(dto.name){
+
+
+      const existingName =
+        await this.categoryRepository.findOne({
+
+          where:{
+            name:dto.name,
+          },
+
+        });
+
+
+
+      if(
+        existingName &&
+        existingName.id !== id
+      ){
+
+        throw new ConflictException(
+          'Category name already exists',
+        );
+
+      }
+
+
+    }
+
+
+
+
+
+
+
+
     if(dto.slug){
 
 
@@ -360,7 +418,6 @@ export class CategoryService {
 
 
 
-    // Prevent category becoming its own parent
     if(dto.parentId){
 
 
@@ -408,7 +465,6 @@ export class CategoryService {
 
 
 
-      // Check ancestor chain
       while(parent){
 
 

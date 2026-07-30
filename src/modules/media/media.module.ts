@@ -3,25 +3,48 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Media } from './entities/media.entity';
 import { User } from '../user/entities/user.entity';
+import { ProductMedia } from '../product-media/entities/product-media.entity';
 
 import { MediaController } from './media.controller';
 import { MediaService } from './media.service';
 
+
 @Module({
+
   imports: [
+
     TypeOrmModule.forFeature([
+
       Media,
+
       User,
+
+      ProductMedia,
+
     ]),
+
   ],
+
+
   controllers: [
+
     MediaController,
+
   ],
+
+
   providers: [
+
     MediaService,
+
   ],
+
+
   exports: [
+
     MediaService,
+
   ],
+
 })
 export class MediaModule {}
