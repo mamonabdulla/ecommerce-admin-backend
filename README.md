@@ -2,38 +2,60 @@
 
 Backend API implementation for the **Trends Bird Limited Backend Developer Intern Assignment**.
 
-This project implements the backend system for an e-commerce admin dashboard. The main focus of this project is authentication, authorization, role-based access control, catalog management, validation, and database design.
+This project implements the backend system for an e-commerce admin dashboard. The main focus of this project is authentication, authorization, role-based access control, catalog management, validation, database design, and API development.
 
 ---
 
-## Technology Stack
+# Live Demo
 
-- Node.js v22.14.0
-- NestJS
-- TypeScript
-- PostgreSQL
-- TypeORM
-- JWT Authentication
-- Refresh Token Authentication
-- bcrypt Password Hashing
-- class-validator
-- Swagger API Documentation
+## Frontend Application
+
+```
+https://ecommerce-admin-frontend-eta.vercel.app/
+```
+
+## Backend API
+
+```
+https://ecommerce-admin-backend-production.up.railway.app
+```
+
+## Swagger Documentation
+
+```
+https://ecommerce-admin-backend-production.up.railway.app/api
+```
+
+---
+
+# Technology Stack
+
+* Node.js v22.14.0
+* NestJS
+* TypeScript
+* PostgreSQL
+* TypeORM
+* JWT Authentication
+* Refresh Token Authentication
+* bcrypt Password Hashing
+* class-validator
+* Swagger API Documentation
 
 ---
 
 # Implemented Modules
 
-| Module | Status |
-|---|---|
+| Module         | Status   |
+| -------------- | -------- |
 | Authentication | Complete |
-| Permission | Complete |
-| Role | Complete |
-| User | Complete |
-| Media | Complete |
-| Category | Complete |
-| Brand | Complete |
-| Attribute | Complete |
-| Product | Complete |
+| Permission     | Complete |
+| Role           | Complete |
+| User           | Complete |
+| Media          | Complete |
+| Category       | Complete |
+| Brand          | Complete |
+| Attribute      | Complete |
+| Product        | Complete |
 
 ---
 
@@ -41,17 +63,17 @@ This project implements the backend system for an e-commerce admin dashboard. Th
 
 Implemented features:
 
-- Login with email and password
-- JWT access token
-- Refresh token authentication
-- Logout with refresh token revocation
-- Current session endpoint
-- Password hashing using bcrypt
-- Active/inactive user protection
+* Login with email and password
+* JWT access token authentication
+* Refresh token authentication
+* Logout with refresh token revocation
+* Current user/session endpoint
+* Password hashing using bcrypt
+* Active/inactive user protection
 
 Authentication strategy:
 
-```
+```http
 Authorization: Bearer <access_token>
 ```
 
@@ -120,7 +142,7 @@ ORM:
 TypeORM
 ```
 
-The project uses TypeORM migrations.
+The project uses TypeORM migrations for database version control.
 
 ---
 
@@ -186,11 +208,11 @@ npm run migration:revert
 
 The seed script creates:
 
-- All required permissions
-- Super Admin role
-- Catalog Manager role
-- Super Admin user
-- Limited Catalog user
+* All required permissions
+* Super Admin role
+* Catalog Manager role
+* Super Admin user
+* Catalog Manager user
 
 Run seed:
 
@@ -238,29 +260,29 @@ Role:
 Catalog Manager
 ```
 
-This account has limited permissions and is used to test 403 forbidden responses.
+This account has limited permissions and is used to test authorization rules.
 
 ---
 
 # Swagger Documentation
 
+Swagger covers:
+
+* Authentication
+* Permissions
+* Roles
+* Users
+* Media
+* Categories
+* Brands
+* Attributes
+* Products
+
 Swagger endpoint:
 
 ```
-http://localhost:3000/api
+https://ecommerce-admin-backend-production.up.railway.app/api
 ```
-
-Swagger covers:
-
-- Authentication
-- Permissions
-- Roles
-- Users
-- Media
-- Categories
-- Brands
-- Attributes
-- Products
 
 ---
 
@@ -290,11 +312,11 @@ src
 
 Implemented:
 
-- File upload
-- Media records
-- File metadata storage
-- Shared media library
-- Media attachment support
+* File upload
+* Media records
+* File metadata storage
+* Shared media library
+* Media attachment support
 
 ---
 
@@ -302,10 +324,10 @@ Implemented:
 
 Implemented:
 
-- Category CRUD
-- Nested category structure
-- Parent-child relationship
-- Category tree support
+* Category CRUD
+* Nested category structure
+* Parent-child relationship
+* Category tree support
 
 ---
 
@@ -313,9 +335,9 @@ Implemented:
 
 Implemented:
 
-- Brand CRUD
-- Product brand relationship
-- Brand management
+* Brand CRUD
+* Product-brand relationship
+* Brand management
 
 ---
 
@@ -323,9 +345,9 @@ Implemented:
 
 Implemented:
 
-- Attribute CRUD
-- Attribute values
-- Product variant support
+* Attribute CRUD
+* Attribute values
+* Product variant support
 
 ---
 
@@ -333,13 +355,13 @@ Implemented:
 
 Implemented:
 
-- Simple products
-- Variable products
-- Product variants
-- Categories relationship
-- Brand relationship
-- Media attachment
-- Product validation
+* Simple products
+* Variable products
+* Product variants
+* Category relationship
+* Brand relationship
+* Media attachment
+* Product validation
 
 ---
 
@@ -347,25 +369,71 @@ Implemented:
 
 Implemented:
 
-- Request validation
-- Duplicate data handling
-- Missing resource handling
-- Authentication errors
-- Authorization errors
+* Request validation
+* Duplicate data handling
+* Missing resource handling
+* Authentication errors
+* Authorization errors
+
+---
+
+# Deployment
+
+The project is deployed using:
+
+## Backend
+
+```
+Railway
+```
+
+Backend URL:
+
+```
+https://ecommerce-admin-backend-production.up.railway.app
+```
+
+## Frontend
+
+```
+Vercel
+```
+
+Frontend URL:
+
+```
+https://ecommerce-admin-frontend-eta.vercel.app/
+```
+
+Deployment includes:
+
+* Railway PostgreSQL database
+* Production backend hosting
+* Production frontend hosting
+* CORS configuration
+* Database migration
+* Database seeding
 
 ---
 
 # Version Control
 
-The project was developed incrementally with multiple commits for different features.
+The project was developed incrementally with multiple commits covering:
+
+* Authentication implementation
+* JWT and refresh token system
+* RBAC implementation
+* Database design
+* Catalog modules
+* Frontend integration
+* Production deployment
 
 ---
 
 # Known Issues
 
-- Frontend exists only to demonstrate backend functionality.
-- UI design is not the primary focus of this assignment.
-- Automated tests and Docker setup were not included.
+* UI design is not the primary focus of this assignment.
+* Automated tests and Docker setup were not included.
 
 ---
 
@@ -373,4 +441,3 @@ The project was developed incrementally with multiple commits for different feat
 
 Md Abdulla Al Mamon
 
-Backend Developer Intern Candidate
