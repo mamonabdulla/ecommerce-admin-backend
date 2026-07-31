@@ -8,16 +8,10 @@ This project implements the backend system for an e-commerce admin dashboard. Th
 
 # Live Demo
 
-## Frontend Application
-
 ```
 https://ecommerce-admin-frontend-eta.vercel.app/
 ```
 
-## Backend API
-
-```
-https://ecommerce-admin-backend-production.up.railway.app
 ```
 
 ## Swagger Documentation
