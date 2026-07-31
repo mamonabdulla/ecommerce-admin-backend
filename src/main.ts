@@ -30,8 +30,10 @@ async function bootstrap() {
 
   app.enableCors({
 
-    origin:
-      process.env.FRONTEND_URL || 'http://localhost:3001',
+    origin: [
+    'https://ecommerce-admin-frontend-eta.vercel.app',
+    'http://localhost:3001',
+  ],
 
     methods:
       [
