@@ -1,0 +1,2508 @@
+{
+  "info": {
+    "_postman_id": "b8fd3558-0354-4af1-8d6e-be8ad53ece0c",
+    "name": "Ecommerce-Backend-Dashboard",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49976437",
+    "_collection_link": "https://go.postman.co/collection/49976437-b8fd3558-0354-4af1-8d6e-be8ad53ece0c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "http://localhost:3000/auth/login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"admin@test.com\",\r\n  //\"email\": \"manager@test.com\",\r\n  \"password\": \"123456\"\r\n\r\n\r\n  \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/auth/profile",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0fav}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/profile",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "profile"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/auth/refresh",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"refreshToken\": \"b8b65b7c1f633252f614b7f29989c4411fdebbb12bbc6c22bfa163370fd11a104b5a2870dcebdc6ef039d71dce3f4703ace898df271c2a129d768a5a9e2a2af0\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/refresh",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "refresh"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/auth/session",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0i9d}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/auth/session",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "session"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission/groups",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_1atw}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Role\",\r\n  \"description\": \"Role management permissions\",\r\n  \"actions\": [\r\n    \"create\",\r\n    \"read\",\r\n    \"update\",\r\n    \"delete\",\r\n    \"watch\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/permission/groups",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission",
+            "groups"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_05g4}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"product:update\",\r\n  \"description\": \"update product\",\r\n  \"groupId\": \"11111111-1111-1111-1111-111111111111\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/permission",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission/groups",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0345}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/permission/groups",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission",
+            "groups"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission/groups/4484d28e-5cec-4bab-9ee8-89a7cae502a5",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0345}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"actions\": [\r\n    \"watch\",\r\n    \"create\",\r\n    \"read\",\r\n    \"update\",\r\n    \"delete\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/permission/groups/4484d28e-5cec-4bab-9ee8-89a7cae502a5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission",
+            "groups",
+            "4484d28e-5cec-4bab-9ee8-89a7cae502a5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0ozv}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/permission",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/auth/logout",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"refreshToken\": \"b8b65b7c1f633252f614b7f29989c4411fdebbb12bbc6c22bfa163370fd11a104b5a2870dcebdc6ef039d71dce3f4703ace898df271c2a129d768a5a9e2a2af0\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0pju}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://localhost:3000/permission",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/role",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0kdp}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Product Manager\",\r\n  \"description\": \"Can manage products\",\r\n  \"isActive\": true,\r\n  \"permissionIds\": [\r\n    \"28cb5100-79de-4a7c-8e6a-8f165efd02b3\",\r\n    \"d0f4ac1c-6962-435c-921a-2efc78608e98\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/role",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "role"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/role",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_10ao}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/role",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "role"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission/28cb5100-79de-4a7c-8e6a-8f165efd02b3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_05g4}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/permission/28cb5100-79de-4a7c-8e6a-8f165efd02b3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission",
+            "28cb5100-79de-4a7c-8e6a-8f165efd02b3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/users",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1ed9}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Manager User\",\r\n  \"email\": \"manager@test.com\",\r\n  \"password\": \"123456\",\r\n  \"roleId\": \"7e84a5ba-0ae7-4d81-8225-1561f512395f\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/users",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0f8h}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/users/bdb2926e-702c-4157-9938-03ed1624a510",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_17gj}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Updated User\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/users/a8556c39-fd00-41c6-9955-0d34bb2bbd43",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users",
+            "a8556c39-fd00-41c6-9955-0d34bb2bbd43"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/users/bdb2926e-702c-4157-9938-03ed1624a510",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_17gj}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/users/a8556c39-fd00-41c6-9955-0d34bb2bbd43",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users",
+            "a8556c39-fd00-41c6-9955-0d34bb2bbd43"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/auth/test-create-product",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0i9d}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/test-create-product",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "auth",
+            "test-create-product"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "localhost:3000/role",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0y1t}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Admin\",\r\n  \"description\": \"Full access admin\",\r\n  \"isActive\": true,\r\n  \"permissionIds\": [\r\n    \"d0f4ac1c-6962-435c-921a-2efc78608e98\",\r\n    \"d4d9583b-374c-45df-b648-d37f87bddbb0\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/role",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "role"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission?search=user",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0pju}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/permission?search=user",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission"
+          ],
+          "query": [
+            {
+              "key": "search",
+              "value": "user"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission/groups/a5739b4a-5458-4eae-abdc-42738a355ce2",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0pju}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"actions\": [\r\n    \"create\",\r\n    \"read\",\r\n    \"update\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/permission/groups/a5739b4a-5458-4eae-abdc-42738a355ce2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission",
+            "groups",
+            "a5739b4a-5458-4eae-abdc-42738a355ce2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/permission/cb688e38-c748-428c-89fe-d6d6a7f47879",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0pju}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/permission/cb688e38-c748-428c-89fe-d6d6a7f47879",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "permission",
+            "cb688e38-c748-428c-89fe-d6d6a7f47879"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/role/7e84a5ba-0ae7-4d81-8225-1561f512395f",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_02eu}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Product Manager Updated\",\r\n  \"description\": \"Updated product management role\",\r\n  \"isActive\": true,\r\n  \"permissionIds\": [\r\n    \"8369cf22-b204-4edc-90b5-3ac96ad186fb\",\r\n    \"15c02430-7d0f-4cb4-ae9a-64989755800c\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/role/7e84a5ba-0ae7-4d81-8225-1561f512395f",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "role",
+            "7e84a5ba-0ae7-4d81-8225-1561f512395f"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/role/4186132a-186d-4ad0-b6e6-88a1044e19f6",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_02eu}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/role/4186132a-186d-4ad0-b6e6-88a1044e19f6",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "role",
+            "4186132a-186d-4ad0-b6e6-88a1044e19f6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/users/d040ee51-8165-4aea-a6bd-26b7f9f9d4ba",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0f8h}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/users/d040ee51-8165-4aea-a6bd-26b7f9f9d4ba",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users",
+            "d040ee51-8165-4aea-a6bd-26b7f9f9d4ba"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/users/1996e941-89e4-43d7-a217-5817dcca6806",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0f8h}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"isActive\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/users/1996e941-89e4-43d7-a217-5817dcca6806",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users",
+            "1996e941-89e4-43d7-a217-5817dcca6806"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/users/1996e941-89e4-43d7-a217-5817dcca6806",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0m6k}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/users/1996e941-89e4-43d7-a217-5817dcca6806",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "users",
+            "1996e941-89e4-43d7-a217-5817dcca6806"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/media",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_17r4}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/media",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "media"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/media/upload",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_06fa}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "uuid": "1ffeb6da-ae5f-483e-a9ed-94b6ad0c4ffb",
+              "src": "postman-cloud:///1f18a96d-83d0-4080-bb9b-e75d3313d2d1"
+            },
+            {
+              "key": "title",
+              "type": "text",
+              "uuid": "e7932980-bede-4450-a519-dc56578c8ff9",
+              "value": "Test image"
+            },
+            {
+              "key": "altText",
+              "type": "text",
+              "uuid": "17a038a4-5a89-4472-9d77-78905febc7b3",
+              "value": "Test upload"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:3000/media/upload",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "media",
+            "upload"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/media/c4b87122-64f4-4eef-bfd5-b95c7ddacb5d",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_06fa}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/media/c4b87122-64f4-4eef-bfd5-b95c7ddacb5d",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "media",
+            "c4b87122-64f4-4eef-bfd5-b95c7ddacb5d"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/media/c4b87122-64f4-4eef-bfd5-b95c7ddacb5d",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_06fa}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Updated Cat Image\",\r\n  \"altText\": \"Updated description\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/media/c4b87122-64f4-4eef-bfd5-b95c7ddacb5d",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "media",
+            "c4b87122-64f4-4eef-bfd5-b95c7ddacb5d"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/media/c4b87122-64f4-4eef-bfd5-b95c7ddacb5d",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_06fa}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/media/c4b87122-64f4-4eef-bfd5-b95c7ddacb5d",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "media",
+            "c4b87122-64f4-4eef-bfd5-b95c7ddacb5d"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/categories",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0wtf}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Phones\",\r\n  \"slug\": \"phones\",\r\n  \"description\": \"Mobile phones\",\r\n  \"parentId\": \"040306d0-0039-4e40-a3eb-00d8a27568f5\",\r\n  \"isActive\": true,\r\n  \"sortOrder\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/categories",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "categories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/categories",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0wtf}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/categories",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "categories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/categories/61d64b27-c54d-4b26-9529-9c2bcc0ebee3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_127l}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/categories/61d64b27-c54d-4b26-9529-9c2bcc0ebee3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "categories",
+            "61d64b27-c54d-4b26-9529-9c2bcc0ebee3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/categories/61d64b27-c54d-4b26-9529-9c2bcc0ebee3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0wtf}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"parentId\": \"342c921b-7d44-4a90-b57d-1c9e00d4c6f5\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/categories/040306d0-0039-4e40-a3eb-00d8a27568f5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "categories",
+            "040306d0-0039-4e40-a3eb-00d8a27568f5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/categories/040306d0-0039-4e40-a3eb-00d8a27568f5",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0wtf}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/categories/040306d0-0039-4e40-a3eb-00d8a27568f5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "categories",
+            "040306d0-0039-4e40-a3eb-00d8a27568f5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/brands",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_17r4}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Apple\",\r\n  \"slug\": \"apple\",\r\n  \"description\": \"Apple Electronics\",\r\n  \"status\": true,\r\n  \"logoId\": \"a5a9413f-429f-4013-a343-d0d5201cd5cf\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/brands",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "brands"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/brands",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1an1}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/brands",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "brands"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/brands?search=sam",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1an1}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/brands?search=sam",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "brands"
+          ],
+          "query": [
+            {
+              "key": "search",
+              "value": "sam"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/brands?status=true",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_1an1}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/brands?status=true",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "brands"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/brands/28874865-aa95-424c-8359-563bf99a4042",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_1an1}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/brands/28874865-aa95-424c-8359-563bf99a4042",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "brands",
+            "28874865-aa95-424c-8359-563bf99a4042"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/brands/28874865-aa95-424c-8359-563bf99a4042",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_15sj}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"description\": \"Updated Samsung Electronics brand\",\r\n  \"status\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/brands/28874865-aa95-424c-8359-563bf99a4042",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "brands",
+            "28874865-aa95-424c-8359-563bf99a4042"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/brands/28874865-aa95-424c-8359-563bf99a4042",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_15sj}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/brands/28874865-aa95-424c-8359-563bf99a4042",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "brands",
+            "28874865-aa95-424c-8359-563bf99a4042"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_04ud}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Color\",\r\n  \"slug\": \"color\",\r\n  \"type\": \"colour_swatch\",\r\n  \"values\": [\r\n    {\r\n      \"value\": \"Black\",\r\n      \"slug\": \"black\"\r\n    },\r\n    {\r\n      \"value\": \"White\",\r\n      \"slug\": \"white\"\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/attributes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_04ud}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/attributes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes/1f4cf91d-0aaa-4e6f-9d1f-d2ed6388b07a",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_0aay}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/attributes/4a2ef760-e283-492e-bbf8-ee72ba116a37",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes",
+            "4a2ef760-e283-492e-bbf8-ee72ba116a37"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes/97e44d38-dd31-40d1-808f-5ac8b093d5f1",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_04ud}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Product Color\",\r\n  \"slug\": \"product-color\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/attributes/4a2ef760-e283-492e-bbf8-ee72ba116a37",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes",
+            "4a2ef760-e283-492e-bbf8-ee72ba116a37"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes/97e44d38-dd31-40d1-808f-5ac8b093d5f1/values",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_1do2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"value\": \"Blue\",\r\n  \"slug\": \"blue\",\r\n  \"referenceValue\": \"#0000FF\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/attributes/4a2ef760-e283-492e-bbf8-ee72ba116a37/values",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes",
+            "4a2ef760-e283-492e-bbf8-ee72ba116a37",
+            "values"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes/97e44d38-dd31-40d1-808f-5ac8b093d5f1",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_04ud}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/attributes/4a2ef760-e283-492e-bbf8-ee72ba116a37",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes",
+            "4a2ef760-e283-492e-bbf8-ee72ba116a37"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes/values/d77f963d-fd76-4316-a951-72c2f7f8a292",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_1do2}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"value\": \"Navy Blue\",\r\n  \"slug\": \"navy-blue\",\r\n  \"referenceValue\": \"#000080\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/attributes/values/d1834562-714e-4962-b796-65aa24179da5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes",
+            "values",
+            "d1834562-714e-4962-b796-65aa24179da5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/attributes/values/d77f963d-fd76-4316-a951-72c2f7f8a292",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0aay}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/attributes/values/d77f963d-fd76-4316-a951-72c2f7f8a292",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "attributes",
+            "values",
+            "d77f963d-fd76-4316-a951-72c2f7f8a292"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/products",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_1bys}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Google Pixel 10\",\r\n  \"slug\": \"google-pixel-10\",\r\n  \"sku\": \"PIXEL10-001\",\r\n  \"shortDescription\": \"Google flagship phone\",\r\n  \"price\": 999,\r\n  \"stock\": 20,\r\n  \"hasVariants\": false,\r\n  \"isFeatured\": true,\r\n  \"mediaIds\": [\r\n    \"a5a9413f-429f-4013-a343-d0d5201cd5cf\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/products",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_1bys}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/products",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/products/4a58864a-1837-49b6-9160-6e9a07cc35d3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_05nk}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/products/4a58864a-1837-49b6-9160-6e9a07cc35d3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "products",
+            "4a58864a-1837-49b6-9160-6e9a07cc35d3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/products/4a58864a-1837-49b6-9160-6e9a07cc35d3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_05nk}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"price\": 899.99,\r\n  \"stock\": 25,\r\n  \"isFeatured\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/products/4a58864a-1837-49b6-9160-6e9a07cc35d3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "products",
+            "4a58864a-1837-49b6-9160-6e9a07cc35d3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/products/4a58864a-1837-49b6-9160-6e9a07cc35d3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_05nk}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/products/4a58864a-1837-49b6-9160-6e9a07cc35d3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "products",
+            "4a58864a-1837-49b6-9160-6e9a07cc35d3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/media",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_secret_1bys}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"fileName\": \"iphone.jpg\",\r\n  \"storedPath\": \"uploads/iphone.jpg\",\r\n  \"publicUrl\": \"/uploads/iphone.jpg\",\r\n  \"mimeType\": \"image/jpeg\",\r\n  \"type\": \"image\",\r\n  \"size\": 50000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/media",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "media"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/product-variants",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_11ft}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/product-variants",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "product-variants"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/product-variants",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{json_web_token_0ik0}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"productId\": \"7a4868c9-1a9a-4a66-8340-6e2e37fbcb6d\",\r\n  \"sku\": \"PIXEL10-NAVY-512\",\r\n  \"price\": 1499,\r\n  \"stock\": 15,\r\n  \"mediaIds\": [\r\n    \"a5a9413f-429f-4013-a343-d0d5201cd5cf\"\r\n  ],\r\n  \"attributeValueIds\": [\r\n    \"d1834562-714e-4962-b796-65aa24179da5\"\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/product-variants",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "product-variants"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/product-variants/3d1134ce-d308-478c-b340-9ebc545b5df3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_0nk7}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/product-variants/3d1134ce-d308-478c-b340-9ebc545b5df3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "product-variants",
+            "3d1134ce-d308-478c-b340-9ebc545b5df3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/product-variants/3d1134ce-d308-478c-b340-9ebc545b5df3",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_04ud}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"price\": 1199,\r\n  \"stock\": 12\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/product-variants/694c7246-d012-4d14-85e1-8472daeb8e84",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "product-variants",
+            "694c7246-d012-4d14-85e1-8472daeb8e84"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/product-variants/694c7246-d012-4d14-85e1-8472daeb8e84",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/product-variants/694c7246-d012-4d14-85e1-8472daeb8e84",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "product-variants",
+            "694c7246-d012-4d14-85e1-8472daeb8e84"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/product-variants/694c7246-d012-4d14-85e1-8472daeb8e84",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{supabase_service_role_api_key_04ud}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/product-variants/694c7246-d012-4d14-85e1-8472daeb8e84",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "product-variants",
+            "694c7246-d012-4d14-85e1-8472daeb8e84"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_secret_11mo",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1c3z",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_02qg",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0k3g",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_02qg",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_1c3z",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0y1t",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0i9d",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_106z",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_05mb",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_106z",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_05g4",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0kdp",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0y1t",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0i9d",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_05g4",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0345",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0ozv",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0m6k",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0f8h",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0f8h",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_02eu",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0pju",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0pju",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_1ase",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_06fa",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0wtf",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_06fa",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_127l",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1an1",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_15sj",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_1an1",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_15sj",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0fav",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_10ao",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_10ao",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_04ud",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0nk7",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0ik0",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_11ft",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_1bys",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_05nk",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_05nk",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_1bys",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1bys",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_0aay",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_1do2",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_04ud",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_0aay",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_04ud",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_17r4",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_17r4",
+      "secret": true
+    },
+    {
+      "key": "supabase_service_role_api_key_17gj",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_17gj",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1ed9",
+      "secret": true
+    },
+    {
+      "key": "auth_secret_1atw",
+      "secret": true
+    }
+  ]
+}
