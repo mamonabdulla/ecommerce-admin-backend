@@ -124,7 +124,6 @@ async function bootstrap() {
 
         },
 
-        'access-token',
 
       )
 
