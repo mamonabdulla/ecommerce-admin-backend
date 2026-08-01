@@ -8,10 +8,10 @@ This project implements the backend system for an e-commerce admin dashboard. Th
 
 # Live Demo
 
-Frontend:
-
 ```
 https://ecommerce-admin-frontend-eta.vercel.app/
+```
+
 ```
 
 ---
@@ -108,7 +108,7 @@ A role contains multiple permissions.
 
 Each protected route declares required permissions.
 
-Example:
+Example permissions:
 
 ```
 product:create
@@ -289,38 +289,50 @@ This account has limited permissions and is used to verify authorization restric
 
 ---
 
-# API Testing
+# API Documentation and Testing
 
 The REST API was tested and verified using **Postman**.
 
-The API collection covers:
+The Postman collection is included in the repository:
 
-* Authentication
+```
+postman/ecommerce-admin-backend.postman_collection.json
+```
+
+The collection covers:
+
+* Authentication APIs
 * Login flow
 * Access token handling
 * Refresh token functionality
 * Logout functionality
+* Session endpoint
 * Role-based access control
 * Permission-based authorization
-* CRUD operations for all implemented modules
+* User management
+* Media management
+* Category management
+* Brand management
+* Attribute management
+* Product management
 
 Authentication flow:
 
-1. Login:
+### 1. Login
 
 ```
 POST /auth/login
 ```
 
-2. Receive access token.
+### 2. Receive access token.
 
-3. Send token with protected requests:
+### 3. Send token with protected requests:
 
 ```http
 Authorization: Bearer <access_token>
 ```
 
-All major API endpoints were tested through Postman.
+All major API endpoints were tested using Postman.
 
 ---
 
@@ -427,9 +439,6 @@ Platform:
 ```
 Railway
 ```
-
-The backend is deployed as a production REST API service.
-
 Deployment includes:
 
 * Railway PostgreSQL database
