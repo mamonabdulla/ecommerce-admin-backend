@@ -8,16 +8,10 @@ This project implements the backend system for an e-commerce admin dashboard. Th
 
 # Live Demo
 
+Frontend:
+
 ```
 https://ecommerce-admin-frontend-eta.vercel.app/
-```
-
-```
-
-## Swagger Documentation
-
-```
-https://ecommerce-admin-backend-production.up.railway.app/api
 ```
 
 ---
@@ -33,23 +27,48 @@ https://ecommerce-admin-backend-production.up.railway.app/api
 * Refresh Token Authentication
 * bcrypt Password Hashing
 * class-validator
-* Swagger API Documentation
 
 ---
 
 # Implemented Modules
 
-| Module         | Status   |
-| -------------- | -------- |
+| Module | Status |
+|---|---|
 | Authentication | Complete |
-| Permission     | Complete |
-| Role           | Complete |
-| User           | Complete |
-| Media          | Complete |
-| Category       | Complete |
-| Brand          | Complete |
-| Attribute      | Complete |
-| Product        | Complete |
+| Permission | Complete |
+| Role | Complete |
+| User | Complete |
+| Media | Complete |
+| Category | Complete |
+| Brand | Complete |
+| Attribute | Complete |
+| Product | Complete |
+
+---
+
+# Architecture Overview
+
+The backend follows a modular NestJS architecture.
+
+```
+Controller
+    |
+Service
+    |
+Repository (TypeORM)
+    |
+PostgreSQL Database
+```
+
+The system implements:
+
+* JWT authentication
+* Refresh token authentication
+* Global authentication guard
+* Permission-based authorization
+* Role-based access control
+* Request validation
+* Database migrations and seeding
 
 ---
 
@@ -59,7 +78,7 @@ Implemented features:
 
 * Login with email and password
 * JWT access token authentication
-* Refresh token authentication
+* Refresh token rotation
 * Logout with refresh token revocation
 * Current user/session endpoint
 * Password hashing using bcrypt
@@ -67,9 +86,11 @@ Implemented features:
 
 Authentication strategy:
 
-```http
+```
 Authorization: Bearer <access_token>
 ```
+
+The project uses Authorization headers instead of cookies.
 
 ---
 
@@ -85,9 +106,9 @@ A user has one role.
 
 A role contains multiple permissions.
 
-Each protected route checks whether the user's role has the required permission.
+Each protected route declares required permissions.
 
-Example permissions:
+Example:
 
 ```
 product:create
@@ -106,19 +127,28 @@ role:update
 media:upload
 ```
 
-The API returns:
+API responses:
 
 ```
 401 Unauthorized
 ```
 
-when authentication fails.
+Returned when:
+
+* Token is missing
+* Token is invalid
+* Token is expired
+* User account is inactive
+
 
 ```
 403 Forbidden
 ```
 
-when the user is authenticated but does not have enough permission.
+Returned when:
+
+* Token is valid
+* User does not have the required permission
 
 ---
 
@@ -136,7 +166,7 @@ ORM:
 TypeORM
 ```
 
-The project uses TypeORM migrations for database version control.
+Database changes are managed using TypeORM migrations.
 
 ---
 
@@ -170,6 +200,7 @@ DATABASE_PASSWORD=your_password
 DATABASE_NAME=ecommerce_admin
 
 JWT_SECRET=your_secret
+JWT_EXPIRES_IN=15m
 
 PORT=3000
 ```
@@ -234,7 +265,7 @@ Role:
 Super Admin
 ```
 
-This account has full system permissions.
+This account has all system permissions.
 
 ---
 
@@ -254,29 +285,42 @@ Role:
 Catalog Manager
 ```
 
-This account has limited permissions and is used to test authorization rules.
+This account has limited permissions and is used to verify authorization restrictions.
 
 ---
 
-# Swagger Documentation
+# API Testing
 
-Swagger covers:
+The REST API was tested and verified using **Postman**.
+
+The API collection covers:
 
 * Authentication
-* Permissions
-* Roles
-* Users
-* Media
-* Categories
-* Brands
-* Attributes
-* Products
+* Login flow
+* Access token handling
+* Refresh token functionality
+* Logout functionality
+* Role-based access control
+* Permission-based authorization
+* CRUD operations for all implemented modules
 
-Swagger endpoint:
+Authentication flow:
+
+1. Login:
 
 ```
-https://ecommerce-admin-backend-production.up.railway.app/api
+POST /auth/login
 ```
+
+2. Receive access token.
+
+3. Send token with protected requests:
+
+```http
+Authorization: Bearer <access_token>
+```
+
+All major API endpoints were tested through Postman.
 
 ---
 
@@ -284,6 +328,8 @@ https://ecommerce-admin-backend-production.up.railway.app/api
 
 ```
 src
+|
+├── modules
 │
 ├── auth
 ├── permission
@@ -306,11 +352,12 @@ src
 
 Implemented:
 
-* File upload
+* Single file upload
+* Multiple file upload
 * Media records
 * File metadata storage
 * Shared media library
-* Media attachment support
+* Product media attachment support
 
 ---
 
@@ -331,7 +378,7 @@ Implemented:
 
 * Brand CRUD
 * Product-brand relationship
-* Brand management
+* Search and filtering support
 
 ---
 
@@ -340,7 +387,7 @@ Implemented:
 Implemented:
 
 * Attribute CRUD
-* Attribute values
+* Attribute values management
 * Product variant support
 
 ---
@@ -352,8 +399,8 @@ Implemented:
 * Simple products
 * Variable products
 * Product variants
-* Category relationship
-* Brand relationship
+* Product-category relationship
+* Product-brand relationship
 * Media attachment
 * Product validation
 
@@ -363,62 +410,60 @@ Implemented:
 
 Implemented:
 
-* Request validation
+* DTO validation using class-validator
 * Duplicate data handling
 * Missing resource handling
-* Authentication errors
-* Authorization errors
+* Authentication error handling
+* Authorization error handling
 
 ---
 
 # Deployment
 
-The project is deployed using:
-
 ## Backend
+
+Platform:
 
 ```
 Railway
 ```
 
-Backend URL:
-
-```
-https://ecommerce-admin-backend-production.up.railway.app
-```
-
-## Frontend
-
-```
-Vercel
-```
-
-Frontend URL:
-
-```
-https://ecommerce-admin-frontend-eta.vercel.app/
-```
+The backend is deployed as a production REST API service.
 
 Deployment includes:
 
 * Railway PostgreSQL database
 * Production backend hosting
-* Production frontend hosting
-* CORS configuration
 * Database migration
 * Database seeding
+* CORS configuration
+
+
+## Frontend
+
+Platform:
+
+```
+Vercel
+```
+
+Frontend:
+
+```
+https://ecommerce-admin-frontend-eta.vercel.app/
+```
 
 ---
 
 # Version Control
 
-The project was developed incrementally with multiple commits covering:
+Development was done incrementally with commits covering:
 
 * Authentication implementation
 * JWT and refresh token system
 * RBAC implementation
 * Database design
-* Catalog modules
+* Module development
 * Frontend integration
 * Production deployment
 
@@ -426,12 +471,12 @@ The project was developed incrementally with multiple commits covering:
 
 # Known Issues
 
-* UI design is not the primary focus of this assignment.
-* Automated tests and Docker setup were not included.
+* UI design is not the main focus of this assignment.
+* Automated tests were not included.
+* Docker setup was not included.
 
 ---
 
 # Author
 
 Md Abdulla Al Mamon
-
